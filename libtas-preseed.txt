@@ -1,5 +1,8 @@
 # Preseed file for libTAS vm
 
+# To use, put on a webserver and run an ubuntu installer with startup arguments:
+#  auto=true priority=critical url=http://hostname/path/to/libtas-preseed.txt
+
 ### Localization
 # Preseeding only locale sets language, country and locale.
 d-i debian-installer/locale string en_US
