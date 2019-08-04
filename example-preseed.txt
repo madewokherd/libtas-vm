@@ -113,14 +113,14 @@ d-i apt-setup/multiarch string i386
 
 
 ### Package selection
-tasksel tasksel/first multiselect gdebi ubuntu-minimal
+tasksel tasksel/first multiselect ubuntu-minimal
 #tasksel tasksel/first multiselect lubuntu-desktop
 #tasksel tasksel/first multiselect ubuntu-desktop
 #tasksel tasksel/first multiselect lamp-server, print-server
 #tasksel tasksel/first multiselect kubuntu-desktop
 
 # Individual additional packages to install
-d-i pkgsel/include string alsamixergui anacron apport-gtk ca-certificates desktop-file-utils dmz-cursor-theme fcitx fcitx-config-gtk2 fcitx-frontend-gtk2 fcitx-ui-classic file-roller firefox galculator gnome-disk-utility gnome-keyring gnome-software gnome-system-tools gvfs-backends gvfs-fuse hardinfo indicator-sound-gtk2 kerneloops language-selector-gnome leafpad libfm-modules libgtk2-perl libnss-mdns lubuntu-gtk-core lxappearance lxappearance-obconf lxinput lxpolkit lxrandr lxsession-default-apps lxsession-logout lxshortcut lxtask network-manager-gnome obconf policykit-desktop-privileges scrot software-properties-gtk synaptic unzip update-notifier x11-utils xdg-user-dirs xdg-user-dirs-gtk xz-utils zip lightdm-gtk-greeter-settings lightdm lubuntu-default-session
+d-i pkgsel/include string alsamixergui anacron apport-gtk ca-certificates desktop-file-utils dmz-cursor-theme fcitx fcitx-config-gtk2 fcitx-frontend-gtk2 fcitx-ui-classic file-roller firefox galculator gnome-disk-utility gnome-keyring gnome-software gnome-system-tools gvfs-backends gvfs-fuse hardinfo kerneloops language-selector-gnome leafpad libfm-modules libgtk2-perl libnss-mdns lubuntu-gtk-core lxappearance lxappearance-obconf lxinput lxpolkit lxrandr lxsession-default-apps lxsession-logout lxshortcut lxtask network-manager-gnome obconf policykit-desktop-privileges scrot software-properties-gtk synaptic unzip update-notifier x11-utils xdg-user-dirs xdg-user-dirs-gtk xz-utils zip lightdm-gtk-greeter-settings lightdm lubuntu-default-session gdebi-core
 #d-i pkgsel/include string openssh-server build-essential
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
@@ -202,5 +202,8 @@ d-i debian-installer/exit/poweroff boolean true
 # still a usable /target directory. You can chroot to /target and use it
 # directly, or use the apt-install and in-target commands to easily install
 # packages and run commands in the target system.
-#d-i preseed/late_command string apt-install zsh; in-target chsh -s /bin/zsh
+d-i preseed/late_command string \
+    in-target apt-get remove -y pavucontrol ; \
+    curl 'https://github.com/clementgallet/libTAS/releases/download/v1.3.4/libtas_1.3.4_amd64.deb' -o /target/tmp/libtas.deb ; \
+    in-target gdebi --non-interactive /tmp/libtas.deb
 
