@@ -1,3 +1,5 @@
+# Preseed file for libTAS vm
+
 ### Localization
 # Preseeding only locale sets language, country and locale.
 d-i debian-installer/locale string en_US
