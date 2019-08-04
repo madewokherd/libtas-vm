@@ -209,6 +209,6 @@ d-i debian-installer/exit/poweroff boolean true
 # packages and run commands in the target system.
 d-i preseed/late_command string \
     in-target apt-get remove -y pavucontrol ; \
-    curl 'https://github.com/clementgallet/libTAS/releases/download/v1.3.4/libtas_1.3.4_amd64.deb' -o /target/tmp/libtas.deb ; \
+    wget 'https://github.com/clementgallet/libTAS/releases/download/v1.3.4/libtas_1.3.4_amd64.deb' -O /target/tmp/libtas.deb ; \
     in-target gdebi --non-interactive /tmp/libtas.deb
 
