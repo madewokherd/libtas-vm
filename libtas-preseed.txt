@@ -208,7 +208,12 @@ d-i debian-installer/exit/poweroff boolean true
 # directly, or use the apt-install and in-target commands to easily install
 # packages and run commands in the target system.
 d-i preseed/late_command string \
-    in-target apt-get remove -y pavucontrol ; \
+    in-target apt-get remove -y pavucontrol pulseaudio pulseaudio-utils ; \
     wget 'https://github.com/clementgallet/libTAS/releases/download/v1.3.4/libtas_1.3.4_amd64.deb' -O /target/tmp/libtas.deb ; \
-    in-target gdebi --non-interactive /tmp/libtas.deb
+    in-target gdebi --non-interactive /tmp/libtas.deb ; \
+    in-target su - ubuntu -c 'mkdir -p ~ubuntu/.local/share' ; \
+    in-target sh -c 'printf "[SeatDefaults]\nautologin-user=ubuntu\n">/etc/lightdm/lightdm.conf.d/12-autologin.conf' ; \
+    in-target su - ubuntu -c 'mkdir -p ~ubuntu/Desktop' ; \
+    in-target su - ubuntu -c 'ln -s /usr/share/applications/libTAS.desktop ~/Desktop/' ; \
+    in-target sh -c 'printf "ubuntu ALL=(ALL) NOPASSWD:ALL">/etc/sudoers.d/10-nopassword'
 
